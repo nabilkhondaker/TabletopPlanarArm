@@ -4,17 +4,44 @@
     --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     --text-primary: #ffffff;
     --text-secondary: #e0e0e0;
+    --cyan-glow: #64ffda;
+    --white-glow: #fff;
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    /* Firefox scrollbar support */
+    scrollbar-width: thin;
+    scrollbar-color: var(--cyan-glow) rgba(255, 255, 255, 0.05);
+}
+
+/* Global Glowing Scrollbar (Webkit browsers like Chrome/Safari/Edge) */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    margin-block: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(100, 255, 218, 0.7);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(100, 255, 218, 0.6), 
+                inset 0 0 5px rgba(255,255,255,0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--cyan-glow);
+    box-shadow: 0 0 15px rgba(100, 255, 218, 0.9), 
+                0 0 30px rgba(100, 255, 218, 0.6);
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: linear-gradient(45deg, #1a0b2e, #4b1d52, #294069, #0d324d);
+font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;    background: linear-gradient(45deg, #1a0b2e, #4b1d52, #294069, #0d324d);
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     color: var(--text-primary);
@@ -52,39 +79,46 @@ body {
 /* Main Article Area */
 .article-panel {
     flex: 2.5;
-    padding: 2.5rem;
+    padding: 60px;
     overflow-y: auto;
-}
-
-/* Custom Scrollbar for the glass panel */
-.article-panel::-webkit-scrollbar {
-    width: 8px;
-}
-.article-panel::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 4px;
-}
-.article-panel::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    box-sizing: border-box;
+    position: relative;
 }
 
 /* Typography Styling */
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-    font-weight: 700;
-    letter-spacing: -0.5px;
-    background: linear-gradient(to right, #fff, #a8c0ff);
+    font-family: 'Inter', -apple-system, sans-serif;
+        border-bottom: 1px solid var(--glass-border);
+
+    font-size: 2.8rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    margin-bottom: 2rem;
+    text-transform: uppercase;
+    
+    /* The "Premium" Effect */
+    background: linear-gradient(135deg, #ffffff 0%, #a8c0ff 50%, var(--cyan-glow) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    
+    /* Subtle Glow */
+    filter: drop-shadow(0 0 20px rgba(100, 255, 218, 0.2));
+    
+    /* Add a slight animation for that "breathing" aesthetic */
+    transition: all 0.5s ease;
+    cursor: default;
+}
+
+h1:hover {
+    filter: drop-shadow(0 0 30px rgba(100, 255, 218, 1));
+    transform: translateY(-2px);
 }
 
 h2 {
     font-size: 1.5rem;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
-    border-bottom: 1px solid var(--glass-border);
+        border-bottom: 1px solid var(--glass-border);
     padding-bottom: 0.5rem;
     color: #a8c0ff;
 }
@@ -111,17 +145,6 @@ li strong {
     color: var(--text-primary);
 }
 
-pre {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 1.5rem;
-    border-radius: 8px;
-    overflow-x: auto;
-    border: 1px solid var(--glass-border);
-    margin: 1.5rem 0;
-    font-size: 0.9rem;
-    color: #64ffda;
-}
-
 /* Media Sidebar Grid */
 .media-sidebar {
     flex: 1;
@@ -146,7 +169,8 @@ pre {
     border-color: rgba(255, 255, 255, 0.4);
 }
 
-.media-panel img {
+.media-panel img, 
+.media-panel video {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -154,42 +178,121 @@ pre {
     transition: opacity 0.3s ease;
 }
 
-.media-panel:hover img {
+.media-panel:hover img,
+.media-panel:hover video {
     opacity: 1;
 }
 
-.media-placeholder {
-    text-align: center;
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-    padding: 1rem;
-}
-
-/* Lightbox Modal */
+/* =========================================
+   Lightbox Modal & Smooth Transitions 
+   ========================================= */
 #lightbox {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
     z-index: 1000;
+    display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 #lightbox.active {
-    display: flex;
+    visibility: visible;
     opacity: 1;
 }
 
-#lightbox img {
+/* Base style for popup content */
+.lightbox-content {
+    display: none;
     max-width: 90%;
     max-height: 90%;
-    border-radius: 8px;
-    box-shadow: 0 0 50px rgba(0,0,0,0.8);
+    border-radius: 12px;
+    box-shadow: 0 0 60px rgba(0,0,0,0.9);
     border: 1px solid rgba(255,255,255,0.2);
+    transform: scale(0.85);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+}
+
+#lightbox.active .show {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Custom Video Wrapper & Controls */
+#video-wrapper {
+    position: relative;
+    overflow: hidden; /* Keeps controls inside the rounded borders */
+}
+
+#video-wrapper.show {
+    display: flex;
+}
+
+#lightbox-vid {
+    width: 100%;
+    max-height: 90vh;
+    display: block;
+}
+
+/* The glassmorphism control bar */
+.custom-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* Slide controls up when hovering over the video */
+#video-wrapper:hover .custom-controls {
+    transform: translateY(0);
+}
+
+.custom-controls button {
+    background: none;
+    border: none;
+    color: var(--cyan-glow);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: transform 0.2s, color 0.2s, text-shadow 0.2s;
+}
+
+.custom-controls button:hover {
+    color: #fff;
+    transform: scale(1.1);
+    text-shadow: 0 0 8px var(--cyan-glow);
+}
+
+/* The timeline slider */
+#progress-bar {
+    flex: 1;
+    cursor: pointer;
+    accent-color: var(--cyan-glow);
+    height: 6px;
+    border-radius: 5px;
+}
+
+#time-display {
+    color: #e0e0e0;
+    font-size: 0.95rem;
+    font-variant-numeric: tabular-nums; /* Keeps numbers from jumping horizontally */
+    min-width: 90px;
+    text-align: center;
 }
 
 /* Responsive Design */
@@ -213,4 +316,359 @@ pre {
         grid-template-rows: repeat(4, 250px);
     }
     body { padding: 1rem; }
+    /* Force controls to stay visible on mobile since there is no hover */
+    .custom-controls { transform: translateY(0); }
+}
+
+#close-btn {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1001;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#lightbox.active #close-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+#close-btn:hover {
+    background: rgba(255, 0, 0, 0.4);
+    transform: rotate(90deg);
+}
+
+/* Make controls un-highlightable */
+.custom-controls {
+    user-select: none;
+    -webkit-user-select: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+/* Container must be relative for the absolute caption */
+.media-panel {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* The Caption styling */
+.hover-caption {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s ease, backdrop-filter 0.3s ease;
+    pointer-events: none; /* Let clicks pass through to the panel */
+}
+
+/* Hover Effect */
+.media-panel:hover .hover-caption {
+    opacity: 1;
+}
+
+/* Subtle zoom effect on the image/video when hovering */
+.media-panel:hover img,
+.media-panel:hover video {
+    transform: scale(1.05);
+    transition: transform 0.5s ease;
+}
+
+/* Ensure the base image/video transition handles the reset */
+.media-panel img, 
+.media-panel video {
+    transition: transform 0.5s ease, opacity 0.3s ease;
+}
+
+/* Refined Engineers Panel Drawer */
+.engineers-panel {
+        user-select: none;
+    position: fixed;
+    left: -240px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    transition: left 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.engineers-panel:hover {
+    left: 0;
+}
+
+.panel-body {
+    width: 240px;
+    padding: 30px;
+    /* Frosted glass effect */
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0 24px 24px 0;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.panel-tab {
+    background: linear-gradient(45deg, #1a0b2e, #4b1d52, #294069, #0d324d);
+    background-size: 300% 300%;
+    animation: gradientBG 10s ease infinite;
+    color: #fff;
+    padding: 25px 12px;
+    border-radius: 0 12px 12px 0;
+    font-weight: 800;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    writing-mode: vertical-rl;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Professional Typography */
+.panel-body h3 {
+    color: var(--cyan-glow);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(100, 255, 218, 0.2);
+    padding-bottom: 10px;
+}
+
+.engineer-item {
+    margin-bottom: 20px;
+}
+
+.engineer-item .name {
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.engineer-item .role {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.github-btn {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    z-index: 1000;
+    
+    /* Gradient same as background */
+    background: linear-gradient(45deg, #1a0b2e, #4b1d52, #294069, #0d324d);
+    background-size: 300% 300%;
+    animation: gradientBG 10s ease infinite;
+    
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    
+    /* Smooth transitions */
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.github-btn:hover {
+    /* Frosted glass effect on hover */
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transform: scale(1.1) rotate(5deg);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Global Tooltip Base (Glossy & Blurred) --- */
+.tooltip-base {
+    position: absolute;
+    left: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 260px;
+    padding: 20px;
+    background: rgba(10, 12, 16, 0.75); /* Very dark, semi-transparent base */
+    backdrop-filter: blur(20px);         /* Strong blur */
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+/* Container to hold the hover trigger */
+.name {
+    position: relative;
+    cursor: default;
+    color: #fff;
+    font-weight: 700;
+    transition: color 0.3s ease;
+}
+
+.name:hover { color: var(--cyan-glow); }
+
+/* The Discord-Style Card */
+.profile-card {
+    position: absolute;
+    left: 110%; /* Positions it to the right of the name */
+    top: -20px;
+    width: 280px;
+    background: #111214;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    opacity: 0;
+    visibility: hidden; /* Ensures it's not clickable when hidden */
+    transition: opacity 0.2s ease, visibility 0.2s;
+    z-index: 1000;
+}
+
+/* Hover Trigger */
+.name:hover .profile-card {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Internal Card Aesthetics */
+.profile-banner {
+    height: 60px;
+    background: linear-gradient(90deg, #1a0b2e, #294069);
+}
+
+.profile-body { padding: 16px; padding-top: 0; user-select: none;}
+
+.profile-avatar {
+    width: 60px;
+    height: 60px;
+    background: #4b1d52;
+    border-radius: 50%;
+    margin-top: -30px;
+    border: 6px solid #111214; /* Matches card background for "cut-out" look */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: white;
+    user-select: none;
+}
+
+.profile-name { margin: 10px 0 2px; color: #fff; font-size: 1.1rem; }
+.profile-bio { color: #b9bbbe; font-size: 0.85rem; margin-bottom: 12px; }
+.role-badge {
+    background: rgba(255,255,255,0.08);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    color: #ddd;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+/* --- Engineer Role (Tooltip Description) --- */
+.role {
+    cursor: help;
+    position: relative;
+    display: inline-block;
+    transition: 0.3s ease;
+}
+
+.role:hover {
+    color: #fff;
+    text-shadow: 0 0 10px var(--white-glow);
+}
+
+.role::after {
+    @extend .tooltip-base;
+    content: attr(data-description);
+    font-size: 0.85rem;
+    color: #fff;
+}
+
+.role:hover::after { opacity: 1; }
+
+.name::after, .role::after {
+    position: absolute;
+    left: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 260px;
+    padding: 20px;
+    background: rgba(10, 12, 16, 0.85); /* Extra dark for text clarity */
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+}
+
+.profile-banner {
+    height: 60px;
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
+}
+
+/* New style for the PFP image */
+.profile-avatar-img {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;      /* Makes it a circle */
+    object-fit: cover;       /* Ensures the photo isn't stretched */
+    margin-top: -30px;
+    border: 6px solid #111214; /* The 'cut out' border */
+    background-color: #111214; /* Fallback color */
+    display: block;
+    user-select: none;
 }
