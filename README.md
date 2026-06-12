@@ -1,6 +1,8 @@
 # 2R Planar Robot Paddle Project
 
 My first successful hands-on project for a dual enrollment Robotic Systems project at Chaffey College, my group opted to create the 2R planar arm playing a game similar to air hockey or Pong.
+
+
 We were given a robotics kit that included several DYNAMIXEL stepper motors and were tasked with creating a system to demonstrate our understanding of controls as taught in our course. Our group opted to design and build a 2-Degree-of-Freedom (2-DoF) planar robotic arm to play an interactive game similar to air hockey or Pong. 
 
 The system operates autonomously by analyzing a top-down workspace view via a camera, running predictive trajectory models to intercept a moving ball, and executing dynamic joint-torque control algorithms to swing the arm and swat the ball back across the arena. I was largely responsible for programming the robot's behavior with Python and implementing its vision processing with OpenCV.
