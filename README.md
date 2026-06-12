@@ -10,9 +10,8 @@
  |  _  // _ \| '_ \ / _ \| __| |  ___/ _` |/ _` |/ _` | |/ _ \
  | | \ \ (_) | |_) | (_) | |_  | |  | (_| | (_| | (_| | |  __/
  |_|  \_\___/|_.__/ \___/ \__| |_|   \__,_|\__,_|\__,_|_|\___|
-   By Nabil Khondaker, Ethan Vance, Hamza Malik, & Arav Mehta                                                       
-                                                                                     
-                                                                                     
+   By Nabil Khondaker, Ethan Vance, Hamza Malik, & Arav Mehta
+
 ```
 My first successful hands-on project for a dual enrollment Robotic Systems project at Chaffey College, my group opted to create the 2R planar arm playing a game similar to air hockey or Pong.
 
