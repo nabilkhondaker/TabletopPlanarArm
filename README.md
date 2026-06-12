@@ -12,9 +12,9 @@ For structural reference and spatial orientation of the setup, see the layout co
 ---
 ## Media
 <img width="640" height="360" src="media/arm.jpg">
-<img width="640" height="360" src="media/arena.jpg">
+<img width="640" height="480" src="media/arena.jpg">
 <video src="media/showcase.mp4" autoplay loop muted playsinline width="100%"></video>
-<img width="640" height="675" src="media/invdyn.png">
+<img width="640" height="335" src="media/invdyn.png">
 
 ---
 
