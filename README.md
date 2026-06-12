@@ -36,9 +36,11 @@ The entire software backend is written in Python, using OpenCV to capture frames
 
 Our video output features a split-screen view: a separately recorded physical perspective on the right, and the primary camera's live processing view on the left, which overlays several critical control and tracking variables.
 
+```
 [Raw Video Frame] ──> [HSV Color Segmentation] ──> [Centroid Extraction] ──> [Velocity Prediction Line]
                                                                                       │
 [Live Motor Encoders] ──> [Forward Kinematics] ──> [Meters-to-Pixels Conversion] ──> [Red Actual Circle Overlay]
+```
 
 The live graphics stream maps four critical state indicators directly onto the visual frame:
 1. **Tracked Ball Position:** Centroid pixel markers drawn directly over the moving purple ball using real-time HSV color segmentation.
