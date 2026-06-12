@@ -11,10 +11,10 @@ For structural reference and spatial orientation of the setup, see the layout co
 
 ---
 ## Media
-<img width="1200" height="675" src="media/arm.jpg">
-<img width="1200" height="675" src="media/arena.jpg">
+<img width="800" height="450" src="media/arm.jpg">
+<img width="800" height="450" src="media/arena.jpg">
 <video src="media/showcase.mp4" autoplay loop muted playsinline width="100%"></video>
-<img width="1200" height="675" src="media/invdyn.png">
+<img width="800" height="675" src="media/invdyn.png">
 
 ---
 
