@@ -34,13 +34,6 @@
             <h2>Computer Vision Pipeline & Live Telemetry</h2>
             <p>The entire software backend is written in Python, using OpenCV to capture frames, process binary masks, track object centroids, and render real-time tracking data.</p>
             <p>Our video output features a split-screen view: a separately recorded physical perspective on the right, and the primary camera's live processing view on the left, which overlays several critical control and tracking variables.</p>
-            
-<pre>
-[Raw Video Frame] ──> [HSV Color Segmentation] ──> [Centroid Extraction] ──> [Velocity Prediction Line]
-                                                                                      │
-[Live Motor Encoders] ──> [Forward Kinematics] ──> [Meters-to-Pixels Conversion] ──> [Red Actual Circle Overlay]
-</pre>
-
             <p>The live graphics stream maps four critical state indicators directly onto the visual frame:</p>
             <ul>
                 <li><strong>Tracked Ball Position:</strong> Centroid pixel markers drawn directly over the moving purple ball using real-time HSV color segmentation.</li>
