@@ -32,7 +32,7 @@ For structural reference and spatial orientation of the setup, see the layout co
   - [Mechanical Design & Hardware Assembly](#mechanical-design--hardware-assembly)
   - [Computer Vision Pipeline & Live Telemetry](#computer-vision-pipeline--live-telemetry)
   - [Control Theory & Algorithm Implementation](#control-theory--algorithm-implementation)
-    - [1. Simplified Inverse Dynamics (Constant/Average Inertia)(#1-simplified-inverse-dynamics-constantaverage-inertia)
+    - [1. Simplified Inverse Dynamics (Constant/Average Inertia)](#1-simplified-inverse-dynamics-constantaverage-inertia)
 
 </details>
 
