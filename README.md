@@ -33,7 +33,11 @@ For structural reference and spatial orientation of the setup, see the layout co
   - [Computer Vision Pipeline & Live Telemetry](#computer-vision-pipeline--live-telemetry)
   - [Control Theory & Algorithm Implementation](#control-theory--algorithm-implementation)
     - [1. Simplified Inverse Dynamics (Constant/Average Inertia)](#1-simplified-inverse-dynamics-constantaverage-inertia)
-
+    - [2. Inertial Inverse Dynamics](#2-inertial-inverse-dynamics)
+    - [3. Full Inverse Dynamics](#3-full-inverse-dynamics)
+    - [Real-World Gain Tuning Observations](#real-world-gain-tuning-observations)
+  - [Hardware Limitations & Engineering Bottlenecks](#hardware-limitations--engineering-bottlenecks)
+  - [References](#references)
 </details>
 
 ---
