@@ -23,6 +23,20 @@ The system operates autonomously by analyzing a top-down workspace view via a ca
 For structural reference and spatial orientation of the setup, see the layout configurations documented in arena.jpg and arm.jpg.
 
 ---
+
+<details>
+  <summary><b>Contents</b></summary>
+  <br/>
+
+  - [Media](#media)
+  - [Mechanical Design & Hardware Assembly](#mechanical-design--hardware-assembly)
+  - [Computer Vision Pipeline & Live Telemetry](#computer-vision-pipeline--live-telemetry)
+  - [Control Theory & Algorithm Implementation](#control-theory--algorithm-implementation)
+    - [1. Simplified Inverse Dynamics (Constant/Average Inertia)(#1-simplified-inverse-dynamics-constantaverage-inertia)
+
+</details>
+
+---
 ## Media
 <img width="640" height="360" src="media/arm.jpg">
 <img width="640" height="480" src="media/arena.jpg">
